@@ -26,7 +26,6 @@ function handleSubmit(event) {
   const { delay, step, amount } = event.currentTarget;
   let position = 0;
   let promiseDelay = delay.value - step.value;
-  console.log(promiseDelay);
   for (let index = 0; index < amount.value; index++) {
     position += 1;
     promiseDelay += Number(step.value);
@@ -34,9 +33,11 @@ function handleSubmit(event) {
     createPromise(position, promiseDelay)
       .then((position, promiseDelay) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${promiseDelay}ms`);
+        console.log(promiseDelay);
       })
       .catch((position, promiseDelay) => {
         Notify.failure(`❌ Rejected promise ${position} in ${promiseDelay}ms`);
+        console.log(promiseDelay);
       })
   }
 }
