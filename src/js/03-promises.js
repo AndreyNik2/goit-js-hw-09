@@ -3,18 +3,18 @@ import { Notify } from 'notiflix';
 const formEl = document.querySelector('.form')
 const submitBtn = document.querySelector('button')
 
-function createPromise(position, elDelay) {
+function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
   
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (shouldResolve) {
-    resolve(position, elDelay)
+    resolve(position, delay)
   } else {
-    reject(position, elDelay)
+    reject(position, delay)
   }
 
-    }, elDelay)
+    }, delay)
   })
   
 }
@@ -49,7 +49,7 @@ function handleSubmit(event) {
   let elDelay = Number(delay.value) - Number(step.value);
   const elStep = Number(step.value);
   const elAmount = Number(amount.value);
-  for (let position = 0; position < elAmount; position+=1) {
+  for (let position = 1; position <= elAmount; position+=1) {
     elDelay += elStep;
     createPromise(position, elDelay)
       .then((position, elDelay) => {
