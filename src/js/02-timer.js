@@ -32,36 +32,36 @@ const options = {
 flatpickr(dateTimePickerRef, options)
 
 
-const timer = {
-  timerInterval: null,
-  refs: {},
-  startTimer() {
-    this.timerInterval = setInterval(() => {
+function startTimer() {
+  const timerInterval = setInterval(() => {
       diff = deadline - Date.now();
+      console.log(diff);
       if (diff <= 1000) {
-        clearInterval(this.timerInterval)
+        clearInterval(timerInterval)
       }
-      const data = this.convertMs(diff);
-      dataDaysRef.textContent = this.addLeadinZero(data.days);
-      dataHoursRef.textContent = this.addLeadinZero(data.hours);
-      dataMinutesRef.textContent = this.addLeadinZero(data.minutes);
-      dataSecondsRef.textContent = this.addLeadinZero(data.seconds);
+      const data = convertMs(diff);
+      dataDaysRef.textContent = addLeadinZero(data.days);
+      dataHoursRef.textContent = addLeadinZero(data.hours);
+      dataMinutesRef.textContent = addLeadinZero(data.minutes);
+      dataSecondsRef.textContent = addLeadinZero(data.seconds);
+    startBtn.setAttribute("disabled", true);
+    dateTimePickerRef.setAttribute("disabled", true);
 
-    }, 1000);
-  },
-  convertMs(diff) {
+  }, 1000);
+}
+function convertMs(diff) {
     const days = Math.floor(diff / 1000 / 60 / 60 / 24);
     const hours = Math.floor(diff / 1000 / 60 / 60) % 24;
     const minutes = Math.floor(diff / 1000 / 60) % 60;
     const seconds = Math.floor(diff / 1000) % 60;
     return { days, hours, minutes, seconds };
-  },
-  addLeadinZero(value) {
+}
+function addLeadinZero(value) {
     return String(value).padStart(2, '0');
-  },
 }
 
 
-startBtn.addEventListener('click', timer.startTimer())
+
+startBtn.addEventListener('click', startTimer)
 
 
