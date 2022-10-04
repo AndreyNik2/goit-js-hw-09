@@ -9,9 +9,11 @@ function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (shouldResolve) {
-    resolve(position, delay)
+        resolve([position, delay])
+        console.log(delay);
   } else {
-    reject(position, delay)
+        reject([position, delay])
+        console.log(delay);
   }
 
     }, delay)
@@ -51,12 +53,13 @@ function handleSubmit(event) {
   const elAmount = Number(amount.value);
   for (let position = 1; position <= elAmount; position+=1) {
     elDelay += elStep;
+    console.log(elDelay);
     createPromise(position, elDelay)
-      .then((position, elDelay) => {
+      .then(([position, elDelay]) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${elDelay}ms`);
         console.log(elDelay);
       })
-      .catch((position, elDelay) => {
+      .catch(([position, elDelay]) => {
         Notify.failure(`❌ Rejected promise ${position} in ${elDelay}ms`);
         console.log(elDelay);
       })
